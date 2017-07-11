@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{F6580491-A788-4604-9B10-31AE99C6A1A3}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\BS.Output.Outlook.nuspec = NuGet\BS.Output.Outlook.nuspec
+		NuGet\nuget.exe = NuGet\nuget.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95F834BF-4383-4420-861A-CC577664DA27}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BS.Output.Outlook", "BS.Output.Outlook\BS.Output.Outlook.csproj", "{72AE9E3B-42E3-444C-B460-F17A2CD6AD14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72AE9E3B-42E3-444C-B460-F17A2CD6AD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AE9E3B-42E3-444C-B460-F17A2CD6AD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AE9E3B-42E3-444C-B460-F17A2CD6AD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AE9E3B-42E3-444C-B460-F17A2CD6AD14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

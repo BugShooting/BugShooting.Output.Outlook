@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+			<id>BS.Output.Outlook</id>
+			<version>1.0.0</version>
+			<title>Microsoft Outlook Output for Bug Shooting</title>
+      <authors>Bug Shooting, Alexej Hirsch</authors>
+      <owners>Bug Shooting, Alexej Hirsch</owners>
+      <licenseUrl>https://github.com/BugShooting/Output.Outlook/raw/master/LICENSE.txt</licenseUrl>
+			<projectUrl>https://github.com/BugShooting</projectUrl>
+			<iconUrl>https://github.com/BugShooting/Output.Outlook/raw/master/BS.Output.Outlook/Resources/logo_64.png</iconUrl>
+			<requireLicenseAcceptance>false</requireLicenseAcceptance>
+			<releaseNotes />
+			<description>Attach screenshots to your Outlook emails.</description>
+			<copyright />
+			<tags>bugshooting.com/output/v3</tags>
+    </metadata>
+    <files>
+			<file src="BS.Output.Outlook.dll" />
+    </files>
+</package>
