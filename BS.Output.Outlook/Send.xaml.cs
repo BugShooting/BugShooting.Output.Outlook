@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace BS.Output.Outlook
@@ -13,7 +11,9 @@ namespace BS.Output.Outlook
       InitializeComponent();
 
       FileNameTextBox.Text = fileName;
-  
+      FileNameTextBox.SelectAll();
+      FileNameTextBox.Focus();
+
     }
 
     public string FileName
