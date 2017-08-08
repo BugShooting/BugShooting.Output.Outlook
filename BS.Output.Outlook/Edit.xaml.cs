@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace BS.Output.Outlook
 {
@@ -23,23 +20,39 @@ namespace BS.Output.Outlook
         FileNameReplacementList.Items.Add(item);
       }
 
-      foreach (string fileFormat in V3.FileHelper.GetFileFormats())
+      IEnumerable<string> fileFormats = V3.FileHelper.GetFileFormats();
+      foreach (string fileFormat in fileFormats)
       {
         ComboBoxItem item = new ComboBoxItem();
         item.Content = fileFormat;
         item.Tag = fileFormat;
-        FileFormatList.Items.Add(item);
+        FileFormatComboBox.Items.Add(item);
       }
 
       NameTextBox.Text = output.Name;
       FileNameTextBox.Text = output.FileName;
-      FileFormatList.SelectedValue = output.FileFormat;
-      if (FileFormatList.SelectedValue is null)
+      FileFormatComboBox.SelectedValue = output.FileFormat;
+      if (FileFormatComboBox.SelectedValue is null)
       {
-        FileFormatList.SelectedIndex = 0;
+        FileFormatComboBox.SelectedIndex = 0;
       }
       EditFileNameCheckBox.IsChecked = output.EditFileName;
-      
+
+      if (fileFormats.Contains(output.FileFormat))
+      {
+        FileFormatComboBox.SelectedValue = output.FileFormat;
+      }
+      else
+      {
+        FileFormatComboBox.SelectedValue = fileFormats.First();
+      }
+
+      NameTextBox.TextChanged += ValidateData;
+      FileNameTextBox.TextChanged += ValidateData;
+      ValidateData(null, null);
+
+      FileNameTextBox.Focus();
+
     }
 
     public string OutputName
@@ -54,7 +67,7 @@ namespace BS.Output.Outlook
 
     public string FileFormat
     {
-      get { return FileFormatList.SelectedValue.ToString(); }
+      get { return (string)FileFormatComboBox.SelectedValue; }
     }
 
     public bool EditFileName
@@ -84,30 +97,16 @@ namespace BS.Output.Outlook
 
     }
 
+    private void ValidateData(object sender, EventArgs e)
+    {
+      OK.IsEnabled = Validation.IsValid(NameTextBox) &&
+                     Validation.IsValid(FileNameTextBox);
+    }
+
+
     private void OK_Click(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
-    }
-
-    private void Cancel_Click(object sender, RoutedEventArgs e)
-    {
-      this.DialogResult = false;
-    }
-
-    protected override void OnPreviewKeyDown(KeyEventArgs e)
-    {
-      base.OnPreviewKeyDown(e);
-
-      switch (e.Key)
-      {
-        case Key.Enter:
-          OK_Click(this, e);
-          break;
-        case Key.Escape:
-          Cancel_Click(this, e);
-          break;
-      }
-            
     }
 
   }

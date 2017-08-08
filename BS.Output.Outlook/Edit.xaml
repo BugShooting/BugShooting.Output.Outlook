@@ -19,7 +19,7 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <Label Grid.Column="0">Name</Label>
-      <TextBox x:Name="NameTextBox" Grid.Column="1" VerticalContentAlignment="Center" />
+      <TextBox x:Name="NameTextBox" Grid.Column="1" VerticalContentAlignment="Center" local:Validation.Required="True" />
     </Grid>
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@
           <ContextMenu x:Name="FileNameReplacementList" />
         </Button.ContextMenu>
       </Button>
-      <ComboBox x:Name="FileFormatList" Grid.Column="1" Width="60" HorizontalAlignment="Right" SelectedValuePath="Tag" />
+      <ComboBox x:Name="FileFormatComboBox" Grid.Column="1" Width="60" HorizontalAlignment="Right" SelectedValuePath="Tag" local:Validation.Required="True" />
     </Grid>
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
@@ -43,8 +43,8 @@
       <CheckBox x:Name="EditFileNameCheckBox" Grid.Column="1" Content="Edit file name before sending" />
     </Grid>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
-      <Button Width="80" Height="24" Content="OK" Margin="4" Click="OK_Click" />
-      <Button Width="80" Height="24" Content="Cancel" Margin="4" Click="Cancel_Click" />
+      <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />
+      <Button Width="80" Height="24" Content="Cancel" Margin="4" IsCancel="True" />
     </StackPanel>
   </StackPanel>
 

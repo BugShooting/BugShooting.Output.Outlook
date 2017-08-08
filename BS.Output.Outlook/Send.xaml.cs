@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System;
+using System.Windows;
 
 namespace BS.Output.Outlook
 {
@@ -11,17 +11,23 @@ namespace BS.Output.Outlook
       InitializeComponent();
 
       FileNameTextBox.Text = fileName;
+
+      FileNameTextBox.SelectionChanged += ValidateData;
+      ValidateData(null, null);
+
       FileNameTextBox.SelectAll();
       FileNameTextBox.Focus();
-
+                
     }
 
     public string FileName
     {
-      get
-      {
-        return FileNameTextBox.Text;
-      }
+      get { return FileNameTextBox.Text; }
+    }
+
+    private void ValidateData(object sender, EventArgs e)
+    {
+      OK.IsEnabled = Validation.IsValid(FileNameTextBox);
     }
 
     private void OK_Click(object sender, RoutedEventArgs e)
@@ -29,27 +35,6 @@ namespace BS.Output.Outlook
       this.DialogResult = true;
     }
 
-    private void Cancel_Click(object sender, RoutedEventArgs e)
-    {
-      this.DialogResult = false;
-    }
-
-    protected override void OnPreviewKeyDown(KeyEventArgs e)
-    {
-      base.OnPreviewKeyDown(e);
-
-      switch (e.Key)
-      {
-        case Key.Enter:
-          OK_Click(this, e);
-          break;
-        case Key.Escape:
-          Cancel_Click(this, e);
-          break;
-      }
-
-    }
-    
   }
 
 }
