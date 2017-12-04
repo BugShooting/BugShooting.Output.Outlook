@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using BS.Plugin.V3.Utilities;
 
-namespace BS.Output.Outlook
+namespace BugShooting.Output.Outlook
 {
   partial class Edit : Window
   {
@@ -12,7 +13,7 @@ namespace BS.Output.Outlook
     {
       InitializeComponent();
 
-      foreach (string fileNameReplacement in V3.FileHelper.GetFileNameReplacements())
+      foreach (string fileNameReplacement in FileHelper.GetFileNameReplacements())
       {
         MenuItem item = new MenuItem();
         item.Header = fileNameReplacement;
@@ -20,7 +21,7 @@ namespace BS.Output.Outlook
         FileNameReplacementList.Items.Add(item);
       }
 
-      IEnumerable<string> fileFormats = V3.FileHelper.GetFileFormats();
+      IEnumerable<string> fileFormats = FileHelper.GetFileFormats();
       foreach (string fileFormat in fileFormats)
       {
         ComboBoxItem item = new ComboBoxItem();

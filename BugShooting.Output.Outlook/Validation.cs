@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace BS.Output.Outlook
+namespace BugShooting.Output.Outlook
 {
   class Validation
   {

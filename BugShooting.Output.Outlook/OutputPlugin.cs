@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using Microsoft.Win32;
+using BS.Plugin.V3.Output;
+using BS.Plugin.V3.Common;
+using BS.Plugin.V3.Utilities;
 
-namespace BS.Output.Outlook
+namespace BugShooting.Output.Outlook
 {
-  public class OutputAddIn: V3.OutputAddIn<Output>
+  public class OutputPlugin: OutputPlugin<Output>
   {
 
     protected override string Name
@@ -71,29 +74,29 @@ namespace BS.Output.Outlook
 
     }
 
-    protected override OutputValueCollection SerializeOutput(Output Output)
+    protected override OutputValues SerializeOutput(Output Output)
     {
 
-      OutputValueCollection outputValues = new OutputValueCollection();
+      OutputValues outputValues = new OutputValues();
 
-      outputValues.Add(new OutputValue("Name", Output.Name));
-      outputValues.Add(new OutputValue("FileName", Output.FileName));
-      outputValues.Add(new OutputValue("FileFormat", Output.FileFormat));
-      outputValues.Add(new OutputValue("EditFileName", Output.EditFileName.ToString()));
+      outputValues.Add("Name", Output.Name);
+      outputValues.Add("FileName", Output.FileName);
+      outputValues.Add("FileFormat", Output.FileFormat);
+      outputValues.Add("EditFileName", Output.EditFileName.ToString());
 
       return outputValues;
 
     }
 
-    protected override Output DeserializeOutput(OutputValueCollection OutputValues)
+    protected override Output DeserializeOutput(OutputValues OutputValues)
     {
-      return new Output(OutputValues["Name", this.Name].Value,
-                        OutputValues["FileName", "Screenshot"].Value,
-                        OutputValues["FileFormat", ""].Value,
-                        Convert.ToBoolean(OutputValues["EditFileName", false.ToString()].Value));
+      return new Output(OutputValues["Name", this.Name],
+                        OutputValues["FileName", "Screenshot"],
+                        OutputValues["FileFormat", ""],
+                        Convert.ToBoolean(OutputValues["EditFileName", false.ToString()]));
     }
 
-    protected async override Task<V3.SendResult> Send(IWin32Window Owner, Output Output, V3.ImageData ImageData)
+    protected async override Task<SendResult> Send(IWin32Window Owner, Output Output, ImageData ImageData)
     {
 
       try
@@ -120,11 +123,11 @@ namespace BS.Output.Outlook
 
         if (!File.Exists(applicationPath))
         {
-          return new V3.SendResult(V3.Result.Failed, "Microsoft Outlook is not installed.");
+          return new SendResult(Result.Failed, "Microsoft Outlook is not installed.");
         }
 
 
-        string fileName = V3.FileHelper.GetFileName(Output.FileName, Output.FileFormat, ImageData);
+        string fileName = FileHelper.GetFileName(Output.FileName, ImageData);
 
         if (Output.EditFileName)
         {
@@ -136,16 +139,16 @@ namespace BS.Output.Outlook
 
           if (send.ShowDialog() != true)
           {
-            return new V3.SendResult(V3.Result.Canceled);
+            return new SendResult(Result.Canceled);
           }
 
           fileName = send.FileName;
 
         }
 
-        string filePath = Path.Combine(Path.GetTempPath(), fileName + "." + V3.FileHelper.GetFileExtention(Output.FileFormat));
+        string filePath = Path.Combine(Path.GetTempPath(), fileName + "." + FileHelper.GetFileExtention(Output.FileFormat));
 
-        Byte[] fileBytes = V3.FileHelper.GetFileBytes(Output.FileFormat, ImageData);
+        Byte[] fileBytes = FileHelper.GetFileBytes(Output.FileFormat, ImageData);
 
         using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
         {
@@ -155,12 +158,12 @@ namespace BS.Output.Outlook
 
         Process.Start(applicationPath, "/a \"" + filePath + "\"");
         
-        return new V3.SendResult(V3.Result.Success);
+        return new SendResult(Result.Success);
 
       }
       catch (Exception ex)
       {
-        return new V3.SendResult(V3.Result.Failed, ex.Message);
+        return new SendResult(Result.Failed, ex.Message);
       }
 
     }

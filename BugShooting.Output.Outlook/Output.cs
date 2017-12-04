@@ -1,4 +1,6 @@
-﻿namespace BS.Output.Outlook
+﻿using BS.Plugin.V3.Output;
+
+namespace BugShooting.Output.Outlook
 {
 
   public class Output: IOutput 

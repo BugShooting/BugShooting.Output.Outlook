@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace BS.Output.Outlook
+namespace BugShooting.Output.Outlook
 {
   partial class Send : Window
   {
