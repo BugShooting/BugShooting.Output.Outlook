@@ -1,4 +1,5 @@
 ﻿using BS.Plugin.V3.Output;
+using System;
 
 namespace BugShooting.Output.Outlook
 {
@@ -8,17 +9,17 @@ namespace BugShooting.Output.Outlook
 
     string name;
     string fileName;
-    string fileFormat;
+    Guid fileFormatID;
     bool editFileName;
 
     public Output(string name,
                   string fileName,
-                  string fileFormat,
+                  Guid fileFormatID,
                   bool editFileName)
     {
       this.name = name;
       this.fileName = fileName;
-      this.fileFormat = fileFormat;
+      this.fileFormatID = fileFormatID;
       this.editFileName = editFileName;
     }
 
@@ -37,9 +38,9 @@ namespace BugShooting.Output.Outlook
       get { return fileName; }
     }
 
-    public string FileFormat
+    public Guid FileFormatID
     {
-      get { return fileFormat; }
+      get { return fileFormatID; }
     }
 
     public bool EditFileName

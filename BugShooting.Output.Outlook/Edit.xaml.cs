@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BS.Plugin.V3.Utilities;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using BS.Plugin.V3.Utilities;
 
 namespace BugShooting.Output.Outlook
 {
@@ -22,35 +20,17 @@ namespace BugShooting.Output.Outlook
         FileNameReplacementList.Items.Add(item);
       }
 
-      IEnumerable<string> fileFormats = FileHelper.GetFileFormats();
-      foreach (string fileFormat in fileFormats)
-      {
-        ComboBoxItem item = new ComboBoxItem();
-        item.Content = fileFormat;
-        item.Tag = fileFormat;
-        FileFormatComboBox.Items.Add(item);
-      }
-
       NameTextBox.Text = output.Name;
       FileNameTextBox.Text = output.FileName;
-      FileFormatComboBox.SelectedValue = output.FileFormat;
-      if (FileFormatComboBox.SelectedValue is null)
-      {
-        FileFormatComboBox.SelectedIndex = 0;
-      }
+
+      FileFormatComboBox.ItemsSource = FileHelper.GetFileFormats();
+      FileFormatComboBox.SelectedValue = output.FileFormatID;
+
       EditFileNameCheckBox.IsChecked = output.EditFileName;
-
-      if (fileFormats.Contains(output.FileFormat))
-      {
-        FileFormatComboBox.SelectedValue = output.FileFormat;
-      }
-      else
-      {
-        FileFormatComboBox.SelectedValue = fileFormats.First();
-      }
-
+          
       NameTextBox.TextChanged += ValidateData;
       FileNameTextBox.TextChanged += ValidateData;
+      FileFormatComboBox.SelectionChanged += ValidateData;
       ValidateData(null, null);
 
       FileNameTextBox.Focus();
@@ -67,9 +47,9 @@ namespace BugShooting.Output.Outlook
       get { return FileNameTextBox.Text; }
     }
 
-    public string FileFormat
+    public Guid FileFormatID
     {
-      get { return (string)FileFormatComboBox.SelectedValue; }
+      get { return (Guid)FileFormatComboBox.SelectedValue; }
     }
 
     public bool EditFileName
@@ -102,7 +82,8 @@ namespace BugShooting.Output.Outlook
     private void ValidateData(object sender, EventArgs e)
     {
       OK.IsEnabled = Validation.IsValid(NameTextBox) &&
-                     Validation.IsValid(FileNameTextBox);
+                     Validation.IsValid(FileNameTextBox) &&
+                     Validation.IsValid(FileFormatComboBox);
     }
 
 
