@@ -105,10 +105,11 @@ namespace BugShooting.Output.Outlook
 
         string applicationPath = string.Empty;
 
-        using (RegistryKey localMachineKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+        // Check 64-bit application
+        using (RegistryKey localMachineKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
         {
           using (RegistryKey clsidKey = localMachineKey.OpenSubKey("Software\\Classes\\Outlook.Application\\CLSID", false))
-          { 
+          {
             if (clsidKey != null)
             {
               string clsid = Convert.ToString(clsidKey.GetValue(string.Empty, string.Empty));
@@ -117,6 +118,27 @@ namespace BugShooting.Output.Outlook
               {
                 if (pathKey != null)
                   applicationPath = Convert.ToString(pathKey.GetValue(string.Empty, string.Empty));
+              }
+            }
+          }
+        }
+
+        // Check 32-bit application
+        if (string.IsNullOrEmpty(applicationPath))
+        {
+          using (RegistryKey localMachineKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+          {
+            using (RegistryKey clsidKey = localMachineKey.OpenSubKey("Software\\Classes\\Outlook.Application\\CLSID", false))
+            { 
+              if (clsidKey != null)
+              {
+                string clsid = Convert.ToString(clsidKey.GetValue(string.Empty, string.Empty));
+
+                using (RegistryKey pathKey = localMachineKey.OpenSubKey("Software\\Classes\\CLSID\\" + clsid + "\\LocalServer32", false))
+                {
+                  if (pathKey != null)
+                    applicationPath = Convert.ToString(pathKey.GetValue(string.Empty, string.Empty));
+                }
               }
             }
           }
